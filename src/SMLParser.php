@@ -181,13 +181,12 @@ class SMLParser {
     }
 
     /**
-     * @param int $list_item
-     * @return number|string|void
+     * @return number|string
      */
-    private function parse_sml_data($list_item=0) {
+    private function parse_sml_data() {
         $TYPE_LEN = $this->read(1);
 
-        if($TYPE_LEN=='00') {
+        if($TYPE_LEN == '00') {
             return $TYPE_LEN; # EndOfSmlMessage
         }
 
@@ -202,7 +201,8 @@ class SMLParser {
             $LEN--; # 1 abziehen wegen zusätzlichem TL-Byte
         }
 
-        if($LEN==1) return;
+        if($LEN==1)
+            return "";
 
         switch($TYPE) {
             case '0x': # Octet
@@ -220,7 +220,8 @@ class SMLParser {
 
             case '7x': # List
                 $this->list_indent++;
-                for($i=1;$i<=$LEN;$i++) $this->parse_sml_data($i);
+                for($i=1;$i<=$LEN;$i++)
+                    $this->parse_sml_data();
                 $this->list_indent--;
                 break;
 
@@ -233,11 +234,12 @@ class SMLParser {
     }
 
     /**
-     * @return string|void
+     * @return string
      */
     private function readOctet() {
         $TYPE_LEN = $this->read(1);
-        if($TYPE_LEN=='01') return;
+        if($TYPE_LEN == '01')
+            return "";
 
         if($TYPE_LEN{0}=='0') {
             $LEN  = hexdec($TYPE_LEN{1}); # only low-nibble
@@ -249,11 +251,12 @@ class SMLParser {
     }
 
     /**
-     * @return string|void
+     * @return string
      */
     private function readInteger() {
         $TYPE_LEN = $this->read(1);
-        if($TYPE_LEN=='01') return;
+        if($TYPE_LEN=='01')
+            return "";
 
         if(!empty($TYPE_LEN{0}) && $TYPE_LEN{0}=='5') {
             $LEN  = hexdec($TYPE_LEN{1}); # only low-nibble
@@ -265,11 +268,12 @@ class SMLParser {
     }
 
     /**
-     * @return string|void
+     * @return string
      */
     private function readUnsigned() {
         $TYPE_LEN = $this->read(1);
-        if($TYPE_LEN=='01') return;
+        if($TYPE_LEN=='01')
+            return "";
 
         if(!empty($TYPE_LEN{0}) && $TYPE_LEN{0}=='6') {
             $LEN  = hexdec($TYPE_LEN{1}); # only low-nibble
@@ -341,8 +345,11 @@ class SMLParser {
         }
 
         switch($result['unit']) {
-            case '1B' : $result['unit']='W';
-            case '1E' : $result['unit']='Wh';
+            case '1B' :
+                $result['unit']='W';
+                break;
+            case '1E' :
+                $result['unit']='Wh';
         }
 
         if($result['scaler']) $result['scaler'] = pow(10,$result['scaler']);
@@ -350,7 +357,11 @@ class SMLParser {
         return $result;
     }
 
+    /**
+     * @return array|string
+     */
     private function readValList() {
+        $result = "";
         $this->debug('ENTER readValList');
         $TYPE_LEN = $this->read(1);
 
@@ -358,12 +369,13 @@ class SMLParser {
             $LEN = hexdec($TYPE_LEN{1});
             for($i=0;$i<$LEN;$i++) {
                 $this->debug("ENTER readListEntry [$i]");
-                $result[]=$this->readListEntry($this->data);
+                $result[]=$this->readListEntry();
             }
             $this->debug('EXIT readValList : '.print_r($result,true),false);
             return $result;
         }else{
             echo('Error reading value-list!');
+            return $result;
         }
     }
 
@@ -501,7 +513,7 @@ class SMLParser {
      * @param $string
      */
     public function parse_sml_string($string) {
-        return $this->parse_sml_hexdata(bin2hex($string));
+        $this->parse_sml_hexdata(bin2hex($string));
     }
 
     /**
