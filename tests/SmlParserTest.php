@@ -4,7 +4,10 @@ namespace test;
 use PHPUnit\Framework\TestCase;
 use pismartmeter\SMLParser;
 
-
+/**
+ * Class SmlParserTest
+ * @package test
+ */
 class SmlParserTest extends TestCase
 {
     /**
