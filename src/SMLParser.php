@@ -347,7 +347,6 @@ class SMLParser {
         switch($result['unit']) {
             case '1B' :
                 $result['unit']='W';
-                break;
             case '1E' :
                 $result['unit']='Wh';
         }
