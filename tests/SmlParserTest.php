@@ -111,7 +111,7 @@ class SmlParserTest extends TestCase
                                     'objName' => '01000F0700FF',
                                     'status' => NULL,
                                     'valTime' => NULL,
-                                    'unit' => 'Wh',
+                                    'unit' => 'W',
                                     'scaler' => 0.10000000000000001,
                                     'value' => 2470,
                                     'valueSignature' => NULL,

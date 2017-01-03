@@ -323,6 +323,9 @@ class SMLParser {
         return $result;
     }
 
+    /**
+     * @return mixed
+     */
     private function readListEntry() {
         $this->match('77'); # 77 = List of 7 item
 
@@ -344,16 +347,27 @@ class SMLParser {
             $result['value'] = $this->hex2bin($result['value']);
         }
 
-        switch($result['unit']) {
-            case '1B' :
-                $result['unit']='W';
-            case '1E' :
-                $result['unit']='Wh';
-        }
+        $result['unit']= $this->parseUnit($result['unit']);
 
         if($result['scaler']) $result['scaler'] = pow(10,$result['scaler']);
 
         return $result;
+    }
+
+    /**
+     * @param $unit
+     * @return string
+     */
+    private function parseUnit($unit){
+        $unit_str = "";
+        switch($unit) {
+            case '1B' :
+                $unit_str ='W';
+                break;
+            case '1E' :
+                $unit_str ='Wh';
+        }
+        return $unit_str;
     }
 
     /**
