@@ -1,5 +1,20 @@
 # pi-smartmeter
 
+### setup AWS IoT
+```commandline
+pip install awscli
+aws configure
+```
+* create cert
+* create thing
+* attach cert
+
+
+### install python
+```commandline
+sudo apt-get install python-pip
+sudo pip install pyserial
+```
 
 ### sml message
 
