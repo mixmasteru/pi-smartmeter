@@ -2,13 +2,16 @@
 
 ### setup AWS IoT
 ```commandline
-pip install awscli
-aws configure
+$ pip install awscli
+$ aws configure
+$ aws iot create-thing --thing-name "theNameOfYourThing"
+$ aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.pem --public-key-outfile publicKey.pem --private-key-outfile privateKey.pem
+$ aws iot create-policy --policy-name "PolicyName" --policy-document data/policy.json
+$ aws iot attach-principal-policy --principal "certificate-arn" --policy-name "PolicyName"
+$ aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
+$ aws iot attach-principal-policy --principal "certificate-arn" --policy-name "PolicyName"
+$ aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
 ```
-* create cert
-* create thing
-* attach cert
-
 
 ### install python
 ```commandline
