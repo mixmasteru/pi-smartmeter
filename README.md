@@ -1,5 +1,12 @@
 # pi-smartmeter
 
+### install python
+```commandline
+$ sudo apt-get install python-pip
+$ sudo pip install pyserial
+$ sudo pip install AWSIoTPythonSDK
+```
+
 ### setup AWS IoT
 ```commandline
 $ pip install awscli
@@ -11,12 +18,6 @@ $ aws iot attach-principal-policy --principal "certificate-arn" --policy-name "P
 $ aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
 $ aws iot attach-principal-policy --principal "certificate-arn" --policy-name "PolicyName"
 $ aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
-```
-
-### install python
-```commandline
-sudo apt-get install python-pip
-sudo pip install pyserial
 ```
 
 ### sml message
