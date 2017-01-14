@@ -9,7 +9,7 @@ $ sudo pip install AWSIoTPythonSDK
 
 ### setup AWS IoT
 ```commandline
-$ pip install awscli
+$ sudo pip install awscli
 $ aws configure
 $ aws iot create-thing --thing-name "theNameOfYourThing"
 $ aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.pem --public-key-outfile publicKey.pem --private-key-outfile privateKey.pem
