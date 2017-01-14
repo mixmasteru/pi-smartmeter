@@ -16,8 +16,6 @@ $ aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile 
 $ aws iot create-policy --policy-name "PolicyName" --policy-document data/policy.json
 $ aws iot attach-principal-policy --principal "certificate-arn" --policy-name "PolicyName"
 $ aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
-$ aws iot attach-principal-policy --principal "certificate-arn" --policy-name "PolicyName"
-$ aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
 ```
 
 ### sml message
