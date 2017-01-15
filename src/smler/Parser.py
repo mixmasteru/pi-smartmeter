@@ -34,6 +34,8 @@ class Parser:
                 self.last_power = self.parse_power(sml_packet)
                 self.data = ""
                 return True
+            else:
+                self.data = ""
 
         return False
 
