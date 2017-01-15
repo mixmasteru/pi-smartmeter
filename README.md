@@ -12,8 +12,8 @@ $ sudo pip install AWSIoTPythonSDK
 $ sudo pip install awscli
 $ aws configure
 $ aws iot create-thing --thing-name "theNameOfYourThing"
-$ aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.pem --public-key-outfile publicKey.pem --private-key-outfile privateKey.pem
-$ aws iot create-policy --policy-name "PolicyName" --policy-document data/policy.json
+$ aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.pem --public-key-outfile public.key --private-key-outfile private.key
+$ aws iot create-policy --policy-name "iot_all" --policy-document "$(cat aws/policy.json)"
 $ aws iot attach-principal-policy --principal "certificate-arn" --policy-name "PolicyName"
 $ aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
 ```
