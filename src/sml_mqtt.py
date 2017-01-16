@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import time
 import serial
@@ -34,16 +36,14 @@ myAWSIoTMQTTClient.connect()
 #time.sleep(2)
 
 try:
-    port.open();
-except SerialException:
-    print 'port already open'
-
-# Publish to the same topic in a loop forever
-parser = Parser()
-while True:
-    byte = port.read()
-    fullsml = parser.add_byte(byte)
-    if fullsml:
-        myAWSIoTMQTTClient.publish(topic_cnt, parser.last_total, 1)
-        myAWSIoTMQTTClient.publish(topic_cur, parser.last_power, 1)
-        time.sleep(sleeps)
+    # Publish to the same topic in a loop forever
+    parser = Parser()
+    while True:
+        byte = port.read()
+        fullsml = parser.add_byte(byte)
+        if fullsml:
+            myAWSIoTMQTTClient.publish(topic_cnt, parser.last_total, 1)
+            myAWSIoTMQTTClient.publish(topic_cur, parser.last_power, 1)
+            time.sleep(sleeps)
+except KeyboardInterrupt:
+    print 'Exit'
