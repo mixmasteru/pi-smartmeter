@@ -11,7 +11,7 @@ port = serial.Serial(
     bytesize=serial.EIGHTBITS
 )
 
-host = "ABCDEFGHIJKLMN.iot.ZONE.amazonaws.com"
+host      = "ABCDEFGHIJKLMN.iot.ZONE.amazonaws.com"
 topic_root= "n4"
 topic_cnt = topic_root+"/meter/power/count"
 topic_cur = topic_root+"/meter/power/current"
@@ -33,9 +33,12 @@ myAWSIoTMQTTClient.connect()
 #myAWSIoTMQTTClient.subscribe("sdk/test/Python", 1, customCallback)
 #time.sleep(2)
 
-# Publish to the same topic in a loop forever
-#port.open();
+try:
+    port.open();
+except SerialException:
+    print 'port already open'
 
+# Publish to the same topic in a loop forever
 parser = Parser()
 while True:
     byte = port.read()
