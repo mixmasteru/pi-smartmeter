@@ -18,6 +18,7 @@ topic_root= "n4"
 topic_cnt = topic_root+"/meter/power/count"
 topic_cur = topic_root+"/meter/power/current"
 sleeps    = 5
+total_intv= 60
 
 myAWSIoTMQTTClient = AWSIoTMQTTClient("smartpi1")
 myAWSIoTMQTTClient.configureEndpoint(host, 8883)
@@ -34,6 +35,7 @@ myAWSIoTMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 myAWSIoTMQTTClient.connect()
 #myAWSIoTMQTTClient.subscribe("sdk/test/Python", 1, customCallback)
 #time.sleep(2)
+last_time = time.time()
 
 try:
     # Publish to the same topic in a loop forever
@@ -42,8 +44,11 @@ try:
         byte = port.read()
         fullsml = parser.add_byte(byte)
         if fullsml:
-            myAWSIoTMQTTClient.publish(topic_cnt, parser.last_total, 1)
+            now = time.time()
             myAWSIoTMQTTClient.publish(topic_cur, parser.last_power, 1)
+            if (last_time+total_intv) <= now:
+                myAWSIoTMQTTClient.publish(topic_cnt, parser.last_total, 1)
+                last_time = now
             time.sleep(sleeps)
 except KeyboardInterrupt:
     print 'Exit'
