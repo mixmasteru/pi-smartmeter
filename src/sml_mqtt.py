@@ -3,8 +3,10 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 import time
 import serial
+import json
 from smler import Parser
 
+print "Start\n"
 port = serial.Serial(
     port='/dev/ttyUSB0',
     baudrate=9600,
@@ -44,10 +46,16 @@ try:
         byte = port.read()
         fullsml = parser.add_byte(byte)
         if fullsml:
-            now = time.time()
-            myAWSIoTMQTTClient.publish(topic_cur, parser.last_power, 1)
+            now       = time.time()
+            localtime = time.localtime(now)
+            payload = {}
+            payload['timestamp']= now
+            payload['datetime'] = time.strftime("%Y%m%d%H%M%S", localtime)
+            payload['value']    = parser.last_power
+            myAWSIoTMQTTClient.publish(topic_cur, json.dumps(payload), 1)
             if (last_time+total_intv) <= now:
-                myAWSIoTMQTTClient.publish(topic_cnt, parser.last_total, 1)
+                payload['value'] = parser.last_total
+                myAWSIoTMQTTClient.publish(topic_cnt, json.dumps(payload), 1)
                 last_time = now
             time.sleep(sleeps)
 except KeyboardInterrupt:
