@@ -6,6 +6,12 @@ $ sudo apt-get install python-pip
 $ sudo pip install pyserial
 $ sudo pip install AWSIoTPythonSDK
 ```
+### install supervisord
+```commandline
+sudo pip install supervisor
+```
+copy supervisord.conf
+start supervisord
 
 ### setup AWS IoT
 ```commandline
