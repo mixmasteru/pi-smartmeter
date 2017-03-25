@@ -1,0 +1,34 @@
+{
+    "Table": {
+        "AttributeDefinitions": [
+            {
+                "AttributeName": "meter_id", 
+                "AttributeType": "S"
+            }, 
+            {
+                "AttributeName": "timestamp", 
+                "AttributeType": "N"
+            }
+        ], 
+        "ProvisionedThroughput": {
+            "NumberOfDecreasesToday": 0, 
+            "WriteCapacityUnits": 5, 
+            "ReadCapacityUnits": 5
+        }, 
+        "TableSizeBytes": 0, 
+        "TableName": "power_meter", 
+        "TableStatus": "ACTIVE", 
+        "KeySchema": [
+            {
+                "KeyType": "HASH", 
+                "AttributeName": "meter_id"
+            }, 
+            {
+                "KeyType": "RANGE", 
+                "AttributeName": "timestamp"
+            }
+        ], 
+        "ItemCount": 0, 
+        "CreationDateTime": 1490471526.504
+    }
+}
