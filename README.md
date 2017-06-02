@@ -2,10 +2,18 @@
 
 ### install python
 ```commandline
-$ sudo apt-get install python-pip
-$ sudo pip install pyserial
-$ sudo pip install AWSIoTPythonSDK
+sudo apt-get install python-pip
+pip install virtualenv
+virtualenv -p /usr/bin/python2.7 venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
+
+to leave virtualenv type:
+```
+deactivate
+```
+
 ### install supervisord
 ```commandline
 sudo pip install supervisor
@@ -15,13 +23,13 @@ start supervisord
 
 ### setup AWS IoT
 ```commandline
-$ sudo pip install awscli
-$ aws configure
-$ aws iot create-thing --thing-name "theNameOfYourThing"
-$ aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.pem --public-key-outfile public.key --private-key-outfile private.key
-$ aws iot create-policy --policy-name "iot_all" --policy-document "$(cat aws/policy.json)"
-$ aws iot attach-principal-policy --principal "certificate-arn" --policy-name "PolicyName"
-$ aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
+sudo pip install awscli
+aws configure
+aws iot create-thing --thing-name "theNameOfYourThing"
+aws iot create-keys-and-certificate --set-as-active --certificate-pem-outfile cert.pem --public-key-outfile public.key --private-key-outfile private.key
+aws iot create-policy --policy-name "iot_all" --policy-document "$(cat aws/policy.json)"
+aws iot attach-principal-policy --principal "certificate-arn" --policy-name "PolicyName"
+aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
 ```
 
 ### sml message

@@ -2,3 +2,4 @@
 /vendor/
 *.iml
 *.pyc
+/venv/
