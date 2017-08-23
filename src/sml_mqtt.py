@@ -20,8 +20,8 @@ host      = "ABCDEFGHIJKLMN.iot.ZONE.amazonaws.com"
 topic_root= "n4"
 topic_cnt = topic_root+"/meter/power/count"
 topic_cur = topic_root+"/meter/power/current"
-sleeps    = 5
-total_intv= 60
+sleeps    = 60
+total_intv= 300
 
 myAWSIoTMQTTClient = AWSIoTMQTTClient("smartpi1")
 myAWSIoTMQTTClient.configureEndpoint(host, 8883)
