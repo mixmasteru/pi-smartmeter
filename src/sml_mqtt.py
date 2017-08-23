@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import time
 import serial
 import json
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from smler import Parser
-from __future__ import print_function
+
 
 print("Start\n")
 port = serial.Serial(
