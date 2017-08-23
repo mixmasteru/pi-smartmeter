@@ -3,3 +3,6 @@
 *.iml
 *.pyc
 /venv/
+*.pem
+*.key
+*.cert
