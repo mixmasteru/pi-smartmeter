@@ -46,10 +46,10 @@ try:
     # Publish to the same topic in a loop forever
     parser = Parser()
     while True:
-        byte = port.read()
-        fullsml = parser.add_byte(byte)
-        if fullsml:
-            try:
+        try:
+            byte = port.read()
+            fullsml = parser.add_byte(byte)
+            if fullsml:
                 now = time.time()
                 localtime = time.localtime(now)
                 payload = {'timestamp': now,
@@ -60,11 +60,13 @@ try:
                     payload['value'] = parser.last_total
                     myAWSIoTMQTTClient.publish(topic_cnt, json.dumps(payload), 1)
                     last_time = now
-            except Exception:
-                print(Exception+" with sml:")
-                print(fullsml)
+        except Exception:
+            print(Exception+" with sml:\n--------------------")
+            print(parser.data)
+            print(Exception+"--------------------")
+            raise Exception
 
-            time.sleep(sleeps)
+        time.sleep(sleeps)
 except KeyboardInterrupt:
     print('Exit')
 

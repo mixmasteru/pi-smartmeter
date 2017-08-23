@@ -5,4 +5,4 @@
 /venv/
 *.pem
 *.key
-*.cert
+*.crt
