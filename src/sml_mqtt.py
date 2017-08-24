@@ -60,13 +60,14 @@ try:
                     payload['value'] = parser.last_total
                     myAWSIoTMQTTClient.publish(topic_cnt, json.dumps(payload), 1)
                     last_time = now
+                time.sleep(sleeps)
         except Exception:
             print(Exception+" with sml:\n--------------------")
             print(parser.data)
             print(Exception+"--------------------")
             raise Exception
 
-        time.sleep(sleeps)
+
 except KeyboardInterrupt:
     print('Exit')
 
