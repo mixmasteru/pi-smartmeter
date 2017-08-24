@@ -62,9 +62,9 @@ try:
                     last_time = now
                 time.sleep(sleeps)
         except Exception:
-            print(Exception+" with sml:\n--------------------")
+            print(str(Exception)+" with sml:\n--------------------")
             print(parser.data)
-            print(Exception+"--------------------")
+            print("--------------------")
             raise Exception
 
 
