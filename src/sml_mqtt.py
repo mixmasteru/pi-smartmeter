@@ -4,6 +4,7 @@ from __future__ import print_function
 import time
 import serial
 import json
+import traceback
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from smler import Parser
 
@@ -65,6 +66,7 @@ try:
             print(str(Exception)+" with sml:\n--------------------")
             print(parser.data)
             print("--------------------")
+            traceback.print_exc()
             raise Exception
 
 
