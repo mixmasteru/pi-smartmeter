@@ -53,11 +53,12 @@ try:
             if fullsml:
                 now = time.time()
                 localtime = time.localtime(now)
-                payload = {'timestamp': now,
-                           'datetime': time.strftime("%Y%m%d%H%M%S", localtime),
-                           'value': parser.last_power}
+                if parser.last_power is not None:
+                    payload = {'timestamp': now,
+                               'datetime': time.strftime("%Y%m%d%H%M%S", localtime),
+                               'value': parser.last_power}
                 myAWSIoTMQTTClient.publish(topic_cur, json.dumps(payload), 1)
-                if (last_time+total_intv) <= now:
+                if (last_time+total_intv) <= now and parser.last_total is not None:
                     payload['value'] = parser.last_total
                     myAWSIoTMQTTClient.publish(topic_cnt, json.dumps(payload), 1)
                     last_time = now

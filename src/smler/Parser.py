@@ -26,6 +26,9 @@ class Parser:
 
     def add_byte(self, char):
         self.data += char.encode('HEX')
+        return self.parse()
+
+    def parse(self):
         endidx = self.data.rfind(Parser.MSG_END)
         if endidx > 0:
             startidx = self.data.rfind(Parser.MSG_START)
@@ -37,15 +40,20 @@ class Parser:
                 return True
             else:
                 self.data = ""
-
         return False
 
     def parse_total(self, sml_packet):
-        total = re.search(Parser.REGEX_TOTAL, sml_packet)
-        total_value = int(total.group(1), 16) / 1e4
+        total_value = None
+        regex = re.compile(Parser.REGEX_TOTAL)
+        total = regex.search(sml_packet)
+        if total:
+            total_value = int(total.group(1), 16) / 1e4
         return total_value
 
     def parse_power(self, sml_packet):
-        power = re.search(Parser.REGEX_POWER, sml_packet)
-        power_value = int(power.group(1), 16) / 1e1
+        power_value = None
+        regex = re.compile(Parser.REGEX_POWER)
+        power = regex.search(sml_packet)
+        if power:
+            power_value = int(power.group(1), 16) / 1e1
         return power_value
