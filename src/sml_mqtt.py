@@ -24,7 +24,7 @@ topic_cnt = topic_root+"/meter/power/count"
 topic_cur = topic_root+"/meter/power/current"
 sleeps    = 60
 total_intv= 300
-meter_id = 1
+meter_id = "n4"
 
 myAWSIoTMQTTClient = AWSIoTMQTTClient("smartpi1")
 myAWSIoTMQTTClient.configureEndpoint(host, 8883)
