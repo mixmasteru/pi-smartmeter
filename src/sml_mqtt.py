@@ -24,6 +24,7 @@ topic_cnt = topic_root+"/meter/power/count"
 topic_cur = topic_root+"/meter/power/current"
 sleeps    = 60
 total_intv= 300
+meter_id = 1
 
 myAWSIoTMQTTClient = AWSIoTMQTTClient("smartpi1")
 myAWSIoTMQTTClient.configureEndpoint(host, 8883)
@@ -53,7 +54,8 @@ try:
             if fullsml:
                 now = time.time()
                 localtime = time.localtime(now)
-                payload = {'timestamp': now,
+                payload = {'meter_id': meter_id,
+                           'timestamp': int(now),
                            'datetime': time.strftime("%Y%m%d%H%M%S", localtime),
                            'value': parser.last_power}
                 myAWSIoTMQTTClient.publish(topic_cur, json.dumps(payload), 1)
