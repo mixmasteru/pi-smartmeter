@@ -57,7 +57,7 @@ try:
 
                 if parser.last_power is not None:
                     payload = {'meter_id': meter_id,
-                               'timestamp': now,
+                               'timestamp': int(now),
                                'datetime': time.strftime("%Y%m%d%H%M%S", localtime),
                                'value': parser.last_power}
 
