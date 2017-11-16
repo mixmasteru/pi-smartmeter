@@ -67,14 +67,15 @@ try:
                 now = time.time()
                 localtime = time.localtime(now)
 
-                if (last_ptime+power_intv) <= now and parser.last_power is not None:
+                if parser.last_power is not None:
+                    powers.append(parser.last_power)
+
+                if (last_ptime+power_intv) <= now and len(powers) > 0:
                     power_ave = sum(powers) / float(len(powers))
                     payload = format_payload(meter_id, now, power_ave)
                     myAWSIoTMQTTClient.publish(topic_cur, json.dumps(payload), 1)
                     last_ptime = now
                     powers = []
-                elif parser.last_power is not None:
-                    powers.append(parser.last_power)
 
                 if (last_time+total_intv) <= now and parser.last_total is not None:
                     payload = format_payload(meter_id, now, parser.last_total)
