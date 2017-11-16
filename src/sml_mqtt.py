@@ -9,6 +9,16 @@ from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from smler import Parser
 
 
+def format_payload(meter_id, now, value):
+    localtime = time.localtime(now)
+    pl = {'meter_id': meter_id,
+          'timestamp': int(now),
+          'datetime': time.strftime("%Y%m%d%H%M%S", localtime),
+          'value': value}
+
+    return pl
+
+
 print("Start\n")
 port = serial.Serial(
     port='/dev/ttyUSB0',
@@ -22,7 +32,8 @@ host      = "ABCDEFGHIJKLMN.iot.ZONE.amazonaws.com"
 topic_root= "n4"
 topic_cnt = topic_root+"/meter/power/count"
 topic_cur = topic_root+"/meter/power/current"
-sleeps    = 60
+sleeps    = 10
+power_intv= 60
 total_intv= 300
 meter_id = "n4"
 
@@ -43,7 +54,8 @@ print("connected\n")
 #myAWSIoTMQTTClient.subscribe("sdk/test/Python", 1, customCallback)
 #time.sleep(2)
 last_time = time.time()
-
+last_ptime = time.time()
+powers = []
 try:
     # Publish to the same topic in a loop forever
     parser = Parser()
@@ -55,15 +67,17 @@ try:
                 now = time.time()
                 localtime = time.localtime(now)
 
-                if parser.last_power is not None:
-                    payload = {'meter_id': meter_id,
-                               'timestamp': int(now),
-                               'datetime': time.strftime("%Y%m%d%H%M%S", localtime),
-                               'value': parser.last_power}
+                if (last_ptime+power_intv) <= now and parser.parser.last_power is not None:
+                    power_ave = sum(powers) / float(len(powers))
+                    payload = format_payload(meter_id, now, power_ave)
+                    myAWSIoTMQTTClient.publish(topic_cur, json.dumps(payload), 1)
+                    last_ptime = now
+                    powers = []
+                else:
+                    powers.append(parser.last_power)
 
-                myAWSIoTMQTTClient.publish(topic_cur, json.dumps(payload), 1)
                 if (last_time+total_intv) <= now and parser.last_total is not None:
-                    payload['value'] = parser.last_total
+                    payload = format_payload(meter_id, now, parser.last_total)
                     myAWSIoTMQTTClient.publish(topic_cnt, json.dumps(payload), 1)
                     last_time = now
                 time.sleep(sleeps)
