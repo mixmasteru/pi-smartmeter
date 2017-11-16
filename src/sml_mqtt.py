@@ -73,7 +73,7 @@ try:
                     myAWSIoTMQTTClient.publish(topic_cur, json.dumps(payload), 1)
                     last_ptime = now
                     powers = []
-                else:
+                elif parser.last_power is not None:
                     powers.append(parser.last_power)
 
                 if (last_time+total_intv) <= now and parser.last_total is not None:
