@@ -1,5 +1,11 @@
 # pi-smartmeter
 
+![smart-meter](img/meter.jpg)
+
+### hardware
+- Raspberry Pi
+- USB IR read/write head
+
 ### install python
 ```commandline
 sudo apt-get install python-pip
