@@ -1,5 +1,4 @@
 # pi-smartmeter
-
 ![smart-meter](img/meter.jpg)
 
 ### hardware
@@ -37,6 +36,8 @@ aws iot create-policy --policy-name "iot_all" --policy-document "$(cat aws/polic
 aws iot attach-principal-policy --principal "certificate-arn" --policy-name "PolicyName"
 aws iot attach-thing-principal --thing-name "theNameOfYourThing" --principal "certificate-arn"
 ```
+### aws cloudwatch
+![cloudwatch](img/cloudwatch.jpg)
 
 ### sml message
 
